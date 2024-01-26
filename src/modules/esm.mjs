@@ -1,6 +1,7 @@
 import path, {dirname} from 'path';
 import {release, version} from 'os';
 import {createServer as createServerHttp} from 'http';
+import {readFileSync} from 'fs';
 import { fileURLToPath } from 'url';
 import './files/c.js';
 
@@ -12,9 +13,9 @@ const random = Math.random();
 let unknownObject;
 
 if (random > 0.5) {
-    unknownObject = await import('./files/a.json', { with: { type: 'json' } })
+    unknownObject = JSON.parse(readFileSync(`${__dirname}/files/a.json`, 'utf8'))
 } else {
-    unknownObject = await import('./files/b.json', { with: { type: 'json' } })
+    unknownObject = JSON.parse(readFileSync(`${__dirname}/files/b.json`, 'utf8'))
 }
 
 console.log(`Release ${release()}`);
