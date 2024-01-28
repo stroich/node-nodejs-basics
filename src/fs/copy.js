@@ -14,9 +14,6 @@ const copy = async () => {
     }).catch((err) => {
         if (err.code === 'ENOENT') {
             fs.promises.readdir(projectFolder)
-                .catch(() => {
-                    throw new Error('FS operation failed');
-                })
                 .then((files) => {
                     fs.promises.mkdir(projectFolderCopy)
                         .then(() => {
@@ -27,6 +24,9 @@ const copy = async () => {
                             });
                         })
                 })
+                .catch(() => {
+                throw new Error('FS operation failed');
+            })
         } else {
             throw new Error('FS operation failed');
         }
